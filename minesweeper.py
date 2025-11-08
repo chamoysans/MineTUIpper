@@ -62,12 +62,13 @@ CSI = "\x1b["
 NotDeadL = True
 NotDead = True
 
-def clear_and_home():
+def clear_and_home(clear):
     # hide cursor (optional), go home
     # sys.stdout.write(CSI + "?25l")   # hide cursor (optional)
     sys.stdout.write(CSI + "H")       # move cursor home
     # optionally clear from cursor to end of screen:
-    sys.stdout.write(CSI + "J")       # erase below"]"
+    if bool(clear):
+        sys.stdout.write(CSI + "J")       # erase below
 
 
 for i in range(gridsize[1]):  # rows
@@ -205,7 +206,7 @@ def main():
 
 
     # grid rendering
-    centprint("MINETUIPPER")
+    centprint("MINETUIIPER")
     centprint("┏" + ("━" * (WIDTH*(1+spacing)+spacing) + "┓"))
     for k in range(((spacing-1)//2)):
         centprint("┃" + (" " * (WIDTH*(1+spacing)+spacing)) + "┃")
@@ -282,9 +283,10 @@ def sweep():
     if area[1] == 1:
         NotDead = False
 
-
+clear_and_home(True)
 while NotDeadL:
-    clear_and_home()
+
+    clear_and_home(False)
     
     main()
     
